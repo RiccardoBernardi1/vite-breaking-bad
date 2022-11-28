@@ -7,7 +7,7 @@ export default {
 <template>
   <header class="d-flex align-items-center p-2">
     <img src="../assets/logo.png" alt="Logo Breaking Bad" />
-    <h1>Breaking Bad Api</h1>
+    <h1 class="fw-bold">Breaking Bad Api</h1>
   </header>
 </template>
 
