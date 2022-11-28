@@ -1,22 +1,23 @@
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppHeader from "./components/AppHeader.vue";
+import AppMain from "./components/AppMain.vue";
 
 export default {
   components: {
-    HelloWorld
-  }
-}
+    AppHeader,
+    AppMain,
+  },
+};
 </script>
 
 <template>
-  <div class="container">
-    <HelloWorld />
-  </div>
-  <div class="container-small">
-    <HelloWorld />
-  </div>
+  <AppHeader />
+  <AppMain />
 </template>
 
 <style lang="scss">
-@import './style/global.scss';
+@import "./style/global.scss";
+body {
+  background-color: #2e3a46;
+}
 </style>
