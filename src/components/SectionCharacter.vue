@@ -3,8 +3,12 @@ import CharacterCard from "./CharacterCard.vue";
 import axios from "axios";
 export default {
   name: "SectionCharacter",
+  props: {
+    selectValue: String,
+  },
   data() {
     return {
+      allCharacters: [],
       characters: [],
     };
   },
@@ -15,15 +19,34 @@ export default {
     axios
       .get("https://www.breakingbadapi.com/api/characters")
       .then((response) => {
-        this.characters = response.data;
+        this.allCharacters = response.data;
+        this.characters = this.allCharacters;
       });
+  },
+  updated() {
+    if (this.selectValue.length > 0) {
+      let charactersFiltered = [];
+      this.allCharacters.forEach((elm) => {
+        if (
+          elm.category === this.selectValue ||
+          elm.category === "Breaking Bad, Better Call Saul"
+        ) {
+          charactersFiltered.push(elm);
+        }
+      });
+      this.characters = charactersFiltered;
+    } else {
+      this.characters = this.allCharacters;
+    }
   },
 };
 </script>
 
 <template>
   <section class="characters p-5">
-    <div class="characters-found px-3 py-4 fw-bold">Found 64 characters</div>
+    <div class="characters-found px-3 py-4 fw-bold">
+      Found {{ characters.length }} characters
+    </div>
     <div class="characters-cards d-flex flex-wrap justify-content-center">
       <CharacterCard
         class="character-card"
