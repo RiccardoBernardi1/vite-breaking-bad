@@ -77,7 +77,16 @@ export default {
   .character-card {
     background-color: #2e3a46;
     color: white;
-    width: calc(20% - 16px);
+    width: calc(100% - 16px);
+    @include media-breakpoint-up(sm) {
+      width: calc(50% - 16px);
+    }
+    @include media-breakpoint-up(md) {
+      width: calc((100% / 3) - 16px);
+    }
+    @include media-breakpoint-up(lg) {
+      width: calc(20% - 16px);
+    }
   }
 }
 </style>
