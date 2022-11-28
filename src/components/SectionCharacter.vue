@@ -1,6 +1,7 @@
 <script>
 import CharacterCard from "./CharacterCard.vue";
 import axios from "axios";
+import AppLoading from "./AppLoading.vue";
 export default {
   name: "SectionCharacter",
   props: {
@@ -10,10 +11,12 @@ export default {
     return {
       allCharacters: [],
       characters: [],
+      loading: true,
     };
   },
   components: {
     CharacterCard,
+    AppLoading,
   },
   created() {
     axios
@@ -21,6 +24,9 @@ export default {
       .then((response) => {
         this.allCharacters = response.data;
         this.characters = this.allCharacters;
+      })
+      .then(() => {
+        this.loading = false;
       });
   },
   updated() {
@@ -47,7 +53,11 @@ export default {
     <div class="characters-found px-3 py-4 fw-bold">
       Found {{ characters.length }} characters
     </div>
-    <div class="characters-cards d-flex flex-wrap justify-content-center">
+    <AppLoading v-if="loading" />
+    <div
+      class="characters-cards d-flex flex-wrap justify-content-center"
+      v-else
+    >
       <CharacterCard
         class="character-card"
         v-for="character in characters"
