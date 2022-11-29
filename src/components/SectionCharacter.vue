@@ -1,14 +1,12 @@
 <script>
 import CharacterCard from "./CharacterCard.vue";
-import axios from "axios";
+import { store } from "../store.js";
 import AppLoading from "./AppLoading.vue";
 export default {
   name: "SectionCharacter",
-  props: {
-    selectValue: String,
-  },
   data() {
     return {
+      store,
       allCharacters: [],
       characters: [],
       loading: true,
@@ -18,49 +16,22 @@ export default {
     CharacterCard,
     AppLoading,
   },
-  created() {
-    axios
-      .get("https://www.breakingbadapi.com/api/characters")
-      .then((response) => {
-        this.allCharacters = response.data;
-        this.characters = this.allCharacters;
-      })
-      .then(() => {
-        this.loading = false;
-      });
-  },
-  updated() {
-    if (this.selectValue.length > 0) {
-      let charactersFiltered = [];
-      this.allCharacters.forEach((elm) => {
-        if (
-          elm.category === this.selectValue ||
-          elm.category === "Breaking Bad, Better Call Saul"
-        ) {
-          charactersFiltered.push(elm);
-        }
-      });
-      this.characters = charactersFiltered;
-    } else {
-      this.characters = this.allCharacters;
-    }
-  },
 };
 </script>
 
 <template>
   <section class="characters p-5">
     <div class="characters-found px-3 py-4 fw-bold">
-      Found {{ characters.length }} characters
+      Found {{ store.characters.length }} characters
     </div>
-    <AppLoading v-if="loading" />
+    <AppLoading v-if="store.loading" />
     <div
       class="characters-cards d-flex flex-wrap justify-content-center"
       v-else
     >
       <CharacterCard
         class="character-card"
-        v-for="character in characters"
+        v-for="character in store.characters"
         :info="character"
       />
     </div>
