@@ -16,13 +16,18 @@ export default {
     CharacterCard,
     AppLoading,
   },
+  computed: {
+    charactersFound() {
+      return this.store.characters.length;
+    },
+  },
 };
 </script>
 
 <template>
   <section class="characters p-5">
     <div class="characters-found px-3 py-4 fw-bold">
-      Found {{ store.characters.length }} characters
+      Found {{ charactersFound }} characters
     </div>
     <AppLoading v-if="store.loading" />
     <div
